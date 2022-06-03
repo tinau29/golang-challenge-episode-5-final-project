@@ -1,0 +1,248 @@
+basePath: /api/v1
+definitions:
+  lib.Response:
+    properties:
+      message:
+        description: response message
+        type: string
+      status:
+        description: http status
+        type: integer
+    type: object
+  model.Employee:
+    properties:
+      address:
+        example: jl. jalan no 1
+        type: string
+      created_at:
+        description: |-
+          BirthOfDate *strfmt.Date     `json:"birth_of_date,omitempty format:"date" swaggertype:"string""`
+          JoinOfDate  *strfmt.Date     `json:"join_date,omitempty format:"date" swaggertype:"string""`
+        format: date-time
+        type: string
+      id:
+        example: 1
+        type: integer
+      is_active:
+        example: true
+        type: boolean
+      is_contract:
+        example: false
+        type: boolean
+      name:
+        example: tino
+        type: string
+      position:
+        example: Programmer
+        type: string
+      salary:
+        example: 1000
+        type: number
+      updated_at:
+        description: updated at automatically changed on put or add on
+        format: date-time
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: developer.team.tog@gmail.com
+    name: Developer
+  description: API Documentation
+  termsOfService: https://dospecs.monstercode.net/en/guide/tnc.html
+  title: My Project
+  version: 1.0.0
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: show basic response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: show basic response
+      tags:
+      - API
+  /employee:
+    get:
+      consumes:
+      - application/json
+      description: Get all employee
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            items:
+              $ref: '#/definitions/model.Employee'
+            type: array
+      summary: Get all employee
+      tags:
+      - Employee
+    post:
+      consumes:
+      - application/json
+      description: Create a employee by ID
+      parameters:
+      - description: Employee data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create a employee by ID
+      tags:
+      - Employee
+  /employee/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a employee by ID
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete a employee by ID
+      tags:
+      - Employee
+    get:
+      consumes:
+      - application/json
+      description: Get a employee by ID
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/model.Employee'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a employee by ID
+      tags:
+      - Employee
+    put:
+      consumes:
+      - application/json
+      description: Update a employee by ID
+      parameters:
+      - description: Employee data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update a employee by ID
+      tags:
+      - Employee
+  /info.json:
+    get:
+      consumes:
+      - application/json
+      description: show info response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: show info response
+      tags:
+      - API
+schemes:
+- http
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

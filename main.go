@@ -20,7 +20,7 @@ func init() {
 // @termsOfService https://dospecs.monstercode.net/en/guide/tnc.html
 // @contact.name Developer
 // @contact.email developer.team.tog@gmail.com
-// @host localhost:9000
+// @host localhost:8000
 // @schemes http
 // @BasePath /api/v1
 // @securityDefinitions.apikey ApiKeyAuth
@@ -30,6 +30,8 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Prefork: viper.GetString("PREFORK") == "true",
 	})
+
+	log.Println("port disini1 : ", viper.GetString("PORT"))
 
 	routes.Handle(app)
 	log.Fatal(app.Listen(":" + viper.GetString("PORT")))
