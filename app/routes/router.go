@@ -14,7 +14,7 @@ import (
 func Handle(app *fiber.App) {
 	services.InitDatabase()
 	app.Use(cors.New())
-	services.InitRedis()
+	// services.InitRedis()
 
 	api := app.Group(viper.GetString("ENDPOINT"))
 
