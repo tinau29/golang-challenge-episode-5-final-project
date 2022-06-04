@@ -20,6 +20,7 @@ http://localhost:8000/api/v1
 
 Create Dokumentation Swagger
 ```bash 
+# swagger init
 swag init --parseDependency
 # swagger documentation running in port 8080
 http://localhost:8080/
