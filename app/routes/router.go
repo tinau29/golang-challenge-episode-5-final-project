@@ -12,9 +12,9 @@ import (
 
 // Handle all request to route to controller
 func Handle(app *fiber.App) {
+	services.InitRedis()
 	services.InitDatabase()
 	app.Use(cors.New())
-	// services.InitRedis()
 
 	api := app.Group(viper.GetString("ENDPOINT"))
 
