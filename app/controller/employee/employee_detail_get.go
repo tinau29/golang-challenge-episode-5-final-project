@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// GetDetailEmployee
+// GetEmployeeDetail
 // @Summary Get a employee by ID
 // @Description Get a employee by ID
 // @Accept application/json
@@ -19,9 +19,10 @@ import (
 // @Success 200 {object} model.Employee{} lib.Response "success"
 // @Failure 400 {object} lib.Response "bad request"
 // @Failure 404 {object} lib.Response "not found"
+// @Param id path string true "Employee ID"
 // @Router /employee/{id} [get]
 // @Tags Employee
-func GetDetailEmployee(c *fiber.Ctx) error {
+func GetEmployeeDetail(c *fiber.Ctx) error {
 	services.InitDatabase()
 	db := services.DB
 

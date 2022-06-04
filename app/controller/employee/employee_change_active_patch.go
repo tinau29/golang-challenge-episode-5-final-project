@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// PutEmployee
+// PatchEmployeeChangeActive
 // @Summary Update a employee by ID
 // @Description Update a employee by ID
 // @Accept application/json
@@ -21,9 +21,9 @@ import (
 // @Failure 404 {object} lib.Response "not found"
 // @Param id path string true "Employee ID"
 // @Param data body model.Employee true "Employee data"
-// @Router /employee/{id} [put]
+// @Router /employee/{id} [patch]
 // @Tags Employee
-func PutEmployee(c *fiber.Ctx) error {
+func PatchEmployeeChangeActive(c *fiber.Ctx) error {
 	services.InitDatabase()
 	db := services.DB
 
@@ -43,8 +43,8 @@ func PutEmployee(c *fiber.Ctx) error {
 		return lib.ErrorBadRequest(c)
 	}
 
-	db.Where(`id = ?`, id).Updates(&employee)
-	employee.ID = employeeExist.ID
+	employeeExist.IsActive = employee.IsActive
+	db.Where(`id = ?`, id).Updates(&employeeExist)
+	return lib.OK(c, employeeExist)
 
-	return lib.OK(c, employee)
 }

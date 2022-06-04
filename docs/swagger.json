@@ -140,6 +140,15 @@
                     "Employee"
                 ],
                 "summary": "Get a employee by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Employee ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "success",
@@ -174,6 +183,13 @@
                 ],
                 "summary": "Update a employee by ID",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Employee ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
                     {
                         "description": "Employee data",
                         "name": "data",
@@ -224,6 +240,57 @@
                         "name": "id",
                         "in": "path",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update a employee by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Update a employee by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Employee ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Employee data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Employee"
+                        }
                     }
                 ],
                 "responses": {
@@ -319,7 +386,7 @@
                     "example": "jl. jalan no 1"
                 },
                 "created_at": {
-                    "description": "BirthOfDate *strfmt.Date     `json:\"birth_of_date,omitempty format:\"date\" swaggertype:\"string\"\"`\nJoinOfDate  *strfmt.Date     `json:\"join_date,omitempty format:\"date\" swaggertype:\"string\"\"`",
+                    "description": "created at automatically inserted on post",
                     "type": "string",
                     "format": "date-time"
                 },

@@ -22,8 +22,9 @@ func Handle(app *fiber.App) {
 	api.Get("/info.json", controller.GetAPIInfo)
 
 	api.Get("/employee", employee.GetEmployee)
-	api.Get("/employee/:id", employee.GetDetailEmployee)
+	api.Get("/employee/:id", employee.GetEmployeeDetail)
 	api.Post("/employee", employee.PostEmployee)
 	api.Put("/employee/:id", employee.PutEmployee)
 	api.Delete("/employee/:id", employee.DeleteEmployee)
+	api.Patch("/employee/:id", employee.PatchEmployeeChangeActive)
 }

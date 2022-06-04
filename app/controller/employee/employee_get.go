@@ -17,7 +17,6 @@ import (
 // @Router /employee [get]
 // @Tags Employee
 func GetEmployee(c *fiber.Ctx) error {
-	services.InitDatabase()
 	db := services.DB
 
 	employee := []model.Employee{}

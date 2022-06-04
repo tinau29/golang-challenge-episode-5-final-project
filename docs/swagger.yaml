@@ -15,9 +15,7 @@ definitions:
         example: jl. jalan no 1
         type: string
       created_at:
-        description: |-
-          BirthOfDate *strfmt.Date     `json:"birth_of_date,omitempty format:"date" swaggertype:"string""`
-          JoinOfDate  *strfmt.Date     `json:"join_date,omitempty format:"date" swaggertype:"string""`
+        description: created at automatically inserted on post
         format: date-time
         type: string
       id:
@@ -159,6 +157,12 @@ paths:
       consumes:
       - application/json
       description: Get a employee by ID
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -177,11 +181,50 @@ paths:
       summary: Get a employee by ID
       tags:
       - Employee
+    patch:
+      consumes:
+      - application/json
+      description: Update a employee by ID
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Employee data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update a employee by ID
+      tags:
+      - Employee
     put:
       consumes:
       - application/json
       description: Update a employee by ID
       parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: string
       - description: Employee data
         in: body
         name: data

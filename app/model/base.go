@@ -29,12 +29,12 @@ func (b *Base) BeforeCreate(tx *gorm.DB) error {
 	return e
 }
 
-// // BeforeUpdate Data
-// func (b *Base) BeforeUpdate(tx *gorm.DB) error {
-// 	if nil != b.ID {
-// 		return nil
-// 	}
-// 	now := strfmt.DateTime(time.Now())
-// 	b.UpdatedAt = &now
-// 	return nil
-// }
+// BeforeUpdate Data
+func (b *Base) BeforeUpdate(tx *gorm.DB) error {
+	if nil != b.ID {
+		return nil
+	}
+	now := strfmt.DateTime(time.Now())
+	b.UpdatedAt = &now
+	return nil
+}

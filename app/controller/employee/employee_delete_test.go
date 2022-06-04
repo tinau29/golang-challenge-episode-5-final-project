@@ -1,55 +1,54 @@
 package employee
 
 import (
+	"api/app/lib"
+	"api/app/model"
+	"api/app/services"
+	"net/http"
+	"strconv"
 	"testing"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/utils"
 )
 
 func TestDeleteEmployee(t *testing.T) {
-	// type TestDeleteEmployeeStruct struct {
-	// 	description  string
-	// 	route        string
-	// 	expectedCode int
-	// }
+	services.InitDatabaseForTest()
+	db := services.DB
 
-	// app := fiber.New()
-	// app.Delete("/api/v1/employee/:id", DeleteEmployee)
+	app := fiber.New()
+	app.Delete("/api/v1/employee/:id", DeleteEmployee)
 
-	// employee := model.Employee{}
-	// employee.Name = "Joni"
-	// employee.Salary = 2000
-	// employee.IsActive = true
-	// employee.IsContract = false
-	// employee.Address = "jl jalan no 1"
-	// employee.Position = "sales marketing"
+	employee := model.Employee{}
+	employee.Name = lib.Strptr("Joni")
+	employee.Address = lib.Strptr("Jl. jalan no 1")
+	employee.Position = lib.Strptr("Programmer")
+	employee.Salary = lib.Float64ptr(2000)
+	employee.IsActive = lib.Boolptr(true)
+	employee.IsContract = lib.Boolptr(false)
 
-	// db := services.InitDatabaseForTest()
-	// db.Create(&employee)
-	// id := strconv.Itoa(*&employee.ID)
+	db.Create(&employee)
+	id := strconv.Itoa(*employee.ID)
 
-	// caseTest := []TestDeleteEmployeeStruct{
-	// 	{
-	// 		description:  "Get response 200",
-	// 		route:        "/ap1/v1/employee/" + id,
-	// 		expectedCode: 200,
-	// 	},
-	// 	{
-	// 		description:  "Get response 400",
-	// 		route:        "/api/v1/employee/test",
-	// 		expectedCode: 400,
-	// 	},
-	// 	{
-	// 		description:  "Get response 404",
-	// 		route:        "/api/v1/employee/0",
-	// 		expectedCode: 404,
-	// 	},
-	// }
+	// positive case
+	url := "/api/v1/employee/" + id
+	req, _ := http.NewRequest("DELETE", url, nil)
+	res, err := app.Test(req)
+	utils.AssertEqual(t, nil, err, "send request")
+	utils.AssertEqual(t, 200, res.StatusCode, "response code")
 
-	// for _, test := range caseTest {
-	// 	req, _ := http.NewRequest("DELETE", test.route, nil)
-	// 	req.Header.Set("accept", "application/json")
-	// 	res, err := app.Test(req)
-	// 	utils.AssertEqual(t, nil, err, "send request")
-	// 	utils.AssertEqual(t, test.expectedCode, res.StatusCode, test.description)
-	// }
+	// regex error case
+	url = "/api/v1/employee/non-existing-id"
+	req, _ = http.NewRequest("DELETE", url, nil)
+	res, err = app.Test(req)
+	utils.AssertEqual(t, nil, err, "send request")
+	utils.AssertEqual(t, 400, res.StatusCode, "response bad body parser")
+
+	// non existing id case
+	url = "/api/v1/employee/0"
+	req, _ = http.NewRequest("DELETE", url, nil)
+	res, err = app.Test(req)
+	utils.AssertEqual(t, nil, err, "send request")
+	utils.AssertEqual(t, 404, res.StatusCode, "response not existing id")
 
 }

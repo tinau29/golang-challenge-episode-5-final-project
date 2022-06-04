@@ -1,59 +1,51 @@
 package employee
 
 import (
+	"api/app/lib"
+	"api/app/model"
+	"api/app/services"
+	"net/http"
+	"strconv"
 	"testing"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/utils"
 )
 
 func TestEmployeeDetail(t *testing.T) {
-	// db := services.InitDatabaseForTest()
-	// // db := services.DB
+	services.InitDatabaseForTest()
+	db := services.DB
 
-	// type TestEmployeeDetailStruct struct {
-	// 	descriptionRequest  string
-	// 	descriptionResponse string
-	// 	route               string
-	// 	expectedCode        int
-	// }
+	app := fiber.New()
+	app.Get("/api/v1/employee/:id", GetEmployeeDetail)
 
-	// app := fiber.New()
-	// app.Get("/api/v1/employee/:id", GetDetailEmployee)
+	employee := model.Employee{}
+	employee.Name = lib.Strptr("Joni")
+	employee.Address = lib.Strptr("Jl. jalan no 1")
+	employee.Position = lib.Strptr("Programmer")
+	employee.Salary = lib.Float64ptr(2000)
+	employee.IsActive = lib.Boolptr(true)
+	employee.IsContract = lib.Boolptr(false)
 
-	// employee := model.Employee{}
-	// *employee.Name = "Joni"
-	// *employee.Address = "Jl. jalan no 1"
-	// *employee.Position = "Programmer"
-	// *employee.Salary = 2000
-	// *employee.IsActive = true
-	// *employee.IsContract = false
+	db.Create(&employee)
+	id := strconv.Itoa(*employee.ID)
 
-	// db.Create(&employee)
-	// id := strconv.Itoa(*employee.ID)
+	url := "/api/v1/employee/" + id
+	req, _ := http.NewRequest("GET", url, nil)
+	res, err := app.Test(req)
+	utils.AssertEqual(t, nil, err, "send request")
+	utils.AssertEqual(t, 200, res.StatusCode, "response 200")
 
-	// caseTest := []TestEmployeeDetailStruct{
-	// 	{
-	// 		descriptionRequest:  "GET /api/v1/movies/" + id,
-	// 		descriptionResponse: "get response success",
-	// 		route:               "/api/v1/movies/" + id,
-	// 		expectedCode:        200,
-	// 	},
-	// 	{
-	// 		descriptionRequest:  "GET /api/v1/movies/test",
-	// 		descriptionResponse: "get response bad request",
-	// 		route:               "/api/v1/movies/test",
-	// 		expectedCode:        400,
-	// 	},
-	// 	{
-	// 		descriptionRequest:  "GET /api/v1/movies/0",
-	// 		descriptionResponse: "get response not found",
-	// 		route:               "/api/v1/movies/0",
-	// 		expectedCode:        404,
-	// 	},
-	// }
+	url = "/api/v1/employee/test"
+	req, _ = http.NewRequest("GET", url, nil)
+	res, err = app.Test(req)
+	utils.AssertEqual(t, nil, err, "send request")
+	utils.AssertEqual(t, 400, res.StatusCode, "response 400")
 
-	// for _, test := range caseTest {
-	// 	res, _, err := lib.GetTest(app, test.route, nil)
-	// 	utils.AssertEqual(t, nil, err, test.descriptionRequest)
-	// 	utils.AssertEqual(t, 200, res.StatusCode, test.descriptionResponse)
-	// }
+	url = "/api/v1/employee/0"
+	req, _ = http.NewRequest("GET", url, nil)
+	res, err = app.Test(req)
+	utils.AssertEqual(t, nil, err, "send request")
+	utils.AssertEqual(t, 404, res.StatusCode, "response 404")
 
 }
