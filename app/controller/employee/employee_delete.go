@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// DeleteEmployee
+// DeleteEmployee Delete a employee by ID
 // @Summary Delete a employee by ID
 // @Description Delete a employee by ID
 // @Accept application/json

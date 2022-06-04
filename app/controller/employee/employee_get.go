@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// GetEmployee
+// GetEmployee Get all employee
 // @Summary Get all employee
 // @Description Get all employee
 // @Accept application/json

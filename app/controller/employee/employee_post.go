@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// PostEmployee
+// PostEmployee Create a employee by ID
 // @Summary Create a employee by ID
 // @Description Create a employee by ID
 // @Accept application/json

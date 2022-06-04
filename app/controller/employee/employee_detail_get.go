@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// GetEmployeeDetail
+// GetEmployeeDetail Get a employee by ID
 // @Summary Get a employee by ID
 // @Description Get a employee by ID
 // @Accept application/json

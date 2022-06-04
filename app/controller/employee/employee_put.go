@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// PutEmployee
+// PutEmployee Update a employee by ID
 // @Summary Update a employee by ID
 // @Description Update a employee by ID
 // @Accept application/json
