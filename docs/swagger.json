@@ -365,6 +365,18 @@
         }
     },
     "definitions": {
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
         "lib.Response": {
             "type": "object",
             "properties": {
@@ -386,6 +398,7 @@
                     "example": "jl. jalan no 1"
                 },
                 "address_detail": {
+                    "description": "`gorm:\"type:jsonb;default:'[]';not null\"`",
                     "$ref": "#/definitions/model.JSONB"
                 },
                 "birth_of_date": {
@@ -397,6 +410,9 @@
                     "description": "created at automatically inserted on post",
                     "type": "string",
                     "format": "date-time"
+                },
+                "deleted_at": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
                 },
                 "id": {
                     "type": "integer",
