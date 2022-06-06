@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 
 	"github.com/go-openapi/strfmt"
-	"gorm.io/gorm"
 )
 
 // Employee model
@@ -22,7 +21,7 @@ type Employee struct {
 	AddressDetail JSONB            `json:"address_detail,omitempty" gorm:"type:jsonb;default:null"`                              //`gorm:"type:jsonb;default:'[]';not null"`
 	CreatedAt     *strfmt.DateTime `json:"created_at,omitempty" gorm:"type:timestamptz" format:"date-time" swaggertype:"string"` // created at automatically inserted on post
 	UpdatedAt     *strfmt.DateTime `json:"updated_at,omitempty" gorm:"type:timestamptz" format:"date-time" swaggertype:"string"` // updated at automatically changed on put or add on
-	DeletedAt     gorm.DeletedAt   `json:"deleted_at"`
+	// DeletedAt     gorm.DeletedAt   `json:"deleted_at"`
 }
 
 type AddressDetails struct {

@@ -1,13 +1,5 @@
 basePath: /api/v1
 definitions:
-  gorm.DeletedAt:
-    properties:
-      time:
-        type: string
-      valid:
-        description: Valid is true if Time is not NULL
-        type: boolean
-    type: object
   lib.Response:
     properties:
       message:
@@ -33,8 +25,6 @@ definitions:
         description: created at automatically inserted on post
         format: date-time
         type: string
-      deleted_at:
-        $ref: '#/definitions/gorm.DeletedAt'
       id:
         example: 1
         type: integer
