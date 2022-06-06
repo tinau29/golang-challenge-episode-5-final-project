@@ -74,7 +74,7 @@ docs:
       - go.*
 
 unit-testing:
-  image: golang:1.16-buster
+  image: golang:1.18-buster
   stage: test
   coverage: /^total:[^\d]+(\d+.\d+)\%/
   script:
