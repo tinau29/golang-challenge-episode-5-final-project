@@ -2,6 +2,7 @@ package lib
 
 import (
 	"testing"
+	"time"
 
 	"github.com/gofiber/fiber/v2/utils"
 	"github.com/google/uuid"
@@ -39,5 +40,11 @@ func TestBoolptr(t *testing.T) {
 func TestFloat64ptr(t *testing.T) {
 	var a float64 = 1.2
 	b := Float64ptr(a)
+	utils.AssertEqual(t, a, *b)
+}
+
+func TestTimeptr(t *testing.T) {
+	var a time.Time = *TimeNow()
+	b := Timeptr(a)
 	utils.AssertEqual(t, a, *b)
 }

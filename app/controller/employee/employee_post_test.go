@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/utils"
 )
@@ -37,6 +38,9 @@ func TestPostEmployee(t *testing.T) {
 	employee.Salary = lib.Float64ptr(2000)
 	employee.IsActive = lib.Boolptr(true)
 	employee.IsContract = lib.Boolptr(false)
+	employee.BirthOfDate = (*strfmt.Date)(lib.Timeptr(*lib.TimeNow()))
+	employee.JoinOfDate = (*strfmt.Date)(lib.Timeptr(*lib.TimeNow()))
+
 	db.Create(&employee)
 
 	req, _ := http.NewRequest("POST", "/api/v1/employee", nil)

@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/utils"
 )
@@ -27,6 +28,8 @@ func TestEmployeePut(t *testing.T) {
 	employee.Salary = lib.Float64ptr(2000)
 	employee.IsActive = lib.Boolptr(true)
 	employee.IsContract = lib.Boolptr(false)
+	employee.BirthOfDate = (*strfmt.Date)(lib.Timeptr(*lib.TimeNow()))
+	employee.JoinOfDate = (*strfmt.Date)(lib.Timeptr(*lib.TimeNow()))
 
 	employeeDeleted := model.Employee{}
 	employeeDeleted.Name = lib.Strptr("Joni")
@@ -35,6 +38,8 @@ func TestEmployeePut(t *testing.T) {
 	employeeDeleted.Salary = lib.Float64ptr(2000)
 	employeeDeleted.IsActive = lib.Boolptr(true)
 	employeeDeleted.IsContract = lib.Boolptr(false)
+	employeeDeleted.BirthOfDate = (*strfmt.Date)(lib.Timeptr(*lib.TimeNow()))
+	employeeDeleted.JoinOfDate = (*strfmt.Date)(lib.Timeptr(*lib.TimeNow()))
 
 	db.Create(&employee)
 	id := strconv.Itoa(*employee.ID)
@@ -78,4 +83,16 @@ func TestEmployeePut(t *testing.T) {
 	utils.AssertEqual(t, nil, err, "send request")
 	utils.AssertEqual(t, 404, res.StatusCode, "not found")
 
+	payload = bytes.NewReader([]byte(`
+	{ 
+		"birth_of_date" : "2022-02-20"
+	}
+	`))
+
+	req, _ = http.NewRequest("PUT", "/api/v1/employee/"+id, payload)
+	req.Header.Set("accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+	res, err = app.Test(req)
+	utils.AssertEqual(t, nil, err, "send request")
+	utils.AssertEqual(t, 200, res.StatusCode, "response code")
 }

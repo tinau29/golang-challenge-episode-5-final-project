@@ -1,6 +1,10 @@
 package lib
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 // UUIDPtr to return memory address
 func UUIDPtr(u uuid.UUID) *uuid.UUID {
@@ -30,4 +34,8 @@ func Strptr(s string) *string {
 // Float64ptr to return memory address
 func Float64ptr(f float64) *float64 {
 	return &f
+}
+
+func Timeptr(t time.Time) *time.Time {
+	return &t
 }

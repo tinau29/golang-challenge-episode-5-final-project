@@ -5,8 +5,12 @@ import (
 	"api/app/model"
 	"api/app/services"
 	"errors"
+	"log"
+	"reflect"
 	"regexp"
+	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 )
@@ -43,8 +47,49 @@ func PutEmployee(c *fiber.Ctx) error {
 		return lib.ErrorBadRequest(c)
 	}
 
+	log.Println("cek aja ", reflect.TypeOf(employeeExist.AddressDetail))
+	log.Println("cek kedua", employeeExist.AddressDetail)
+
 	db.Where(`id = ?`, id).Updates(&employee)
 	employee.ID = employeeExist.ID
+
+	if employee.Name == nil {
+		employee.Name = lib.Strptr(*employeeExist.Name)
+	}
+
+	if employee.Address == nil {
+		employee.Address = lib.Strptr(*employeeExist.Address)
+	}
+
+	if employee.Position == nil {
+		employee.Position = lib.Strptr(*employeeExist.Position)
+	}
+
+	if employee.Salary == nil {
+		employee.Salary = lib.Float64ptr(*employeeExist.Salary)
+	}
+
+	if employee.IsActive == nil {
+		employee.IsActive = lib.Boolptr(*employeeExist.IsActive)
+	}
+
+	if employee.IsContract == nil {
+		employee.IsContract = lib.Boolptr(*employeeExist.IsContract)
+	}
+
+	if employee.BirthOfDate == nil {
+		employee.BirthOfDate = (*strfmt.Date)(lib.Timeptr(time.Time(*employeeExist.BirthOfDate)))
+	}
+
+	if employee.JoinOfDate == nil {
+		employee.JoinOfDate = (*strfmt.Date)(lib.Timeptr(time.Time(*employeeExist.JoinOfDate)))
+	}
+
+	log.Println(len(employeeExist.AddressDetail))
+
+	if len(employee.AddressDetail) == 0 {
+		employee.AddressDetail = employeeExist.AddressDetail
+	}
 
 	return lib.OK(c, employee)
 }

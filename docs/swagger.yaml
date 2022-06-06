@@ -14,6 +14,12 @@ definitions:
       address:
         example: jl. jalan no 1
         type: string
+      address_detail:
+        $ref: '#/definitions/model.JSONB'
+      birth_of_date:
+        example: "2000-02-22"
+        format: date
+        type: string
       created_at:
         description: created at automatically inserted on post
         format: date-time
@@ -27,6 +33,10 @@ definitions:
       is_contract:
         example: false
         type: boolean
+      join_of_date:
+        example: "2000-02-22"
+        format: date
+        type: string
       name:
         example: tino
         type: string
@@ -40,6 +50,9 @@ definitions:
         description: updated at automatically changed on put or add on
         format: date-time
         type: string
+    type: object
+  model.JSONB:
+    additionalProperties: true
     type: object
 host: localhost:8000
 info:
