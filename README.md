@@ -13,7 +13,7 @@ Running Project
 # running all service using docker-compose
 docker-compose up -d --force-recreate
 # running final project
-docker-compose exec exec go go run .
+docker-compose exec go go run .
 # project running in port 8000
 http://localhost:8000/api/v1
 ```

@@ -12,7 +12,7 @@ stages:
   - deploy
 
 cleancode:
-  image: golang:1.16-buster
+  image: golang:1.18-buster 
   stage: test
   coverage: /^Grade:\s*[A-Z]\+?\s*\((\d+.\d+)\%\)/
   variables:
@@ -51,7 +51,7 @@ cleancode:
       - go.*
 
 docs:
-  image: golang:1.16-buster
+  image: golang:1.18-buster 
   stage: test
   coverage: /^total:[^\d]+(\d+.\d+)\%/
   script:
